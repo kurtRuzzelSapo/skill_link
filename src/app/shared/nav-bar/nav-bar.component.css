@@ -1,0 +1,10 @@
+:host ::ng-deep p-menu{
+  background-color: white;
+}
+
+:host ::ng-deep .icon{
+font-size: 1.7rem;
+margin: 0px 25px;
+/* font-weight: 600; */
+
+}

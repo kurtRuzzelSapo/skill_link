@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@layer tailwind-base, primeng, tailwind-utilities;
+@layer tailwind-base {
+@tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+body {
+  background-color: #ffffff;
+  color: black;
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+}
+.my-app-dark {
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* Light text color */
+}
+
+/* Customize the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar (horizontal) */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Light gray background */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Darker gray thumb */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Add hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker thumb on hover */
+}
+

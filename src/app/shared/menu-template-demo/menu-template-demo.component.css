@@ -1,0 +1,33 @@
+/* :host ::ng-deep .p-menu {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(255, 255, 255) !important;
+
+}
+:host ::ng-deep span {
+  color: rgb(255, 255, 255) !important;
+}
+
+:host ::ng-deep .p-menuitem-link {
+  color: rgb(255, 255, 255) !important;
+}
+
+:host ::ng-deep .p-menu .p-menuitem-link:hover {
+  background-color: #5c0000 !important;
+} */ 
+
+:host ::ng-deep span {
+
+  color: rgb(0, 0, 0) !important;
+  font-weight: 500;
+}
+:host ::ng-deep .wew {
+  color: rgb(0, 0, 0) !important;
+  font-weight: 700;
+}
+
+:host ::ng-deep .p-menu {
+  border-radius: 0px;
+  /* background-color: rgb(0, 37, 80) !important; */
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(255, 255, 255) !important;
+}

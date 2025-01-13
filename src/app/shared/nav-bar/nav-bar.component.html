@@ -1,0 +1,42 @@
+<!-- <nav class="bg-white shadow p-4">
+  <ul class="flex space-x-6 justify-center">
+    <li *ngFor="let route of routes"
+        class="text-gray-600 hover:text-blue-500 font-medium">
+      <a [routerLink]="route.path"
+        [className]="route.class"
+         routerLinkActive="text-blue-500"
+         [routerLinkActiveOptions]="{exact: true}">
+        {{ route.label }}
+      </a>
+    </li>
+  </ul>
+</nav> -->
+
+<nav   class="flex justify-between items-center w-full qwq">
+  <div class="w-1/4 md:block hidden"> <img src="skill-link-name.png" alt="Logo" width="120px" height="auto">
+
+
+
+  </div>
+  <ul class="flex space-x-6 justify-center flex-1">
+    <li *ngFor="let route of routes"
+        class="text-gray-600 hover:text-blue-500 font-medium">
+      <a [routerLink]="route.path"
+         routerLinkActive="text-blue-500 underline"
+         [routerLinkActiveOptions]="{exact: true}"
+         class="flex items-center gap-2">
+         <div class="flex flex-col items-center justify-center text-center">
+           <i [class]="route.icon" class="icon" showDelay="1000" [pTooltip]="route.Tooltip" tooltipPosition="bottom"></i>
+           <!-- <span>{{ route.label }}</span> -->
+         </div>
+      </a>
+    </li>
+  </ul>
+  <div class="  w-1/4 text-right md:block hidden ">
+    <div class="flex justify-end align-middle font-medium">
+      <p-avatar (click)="menu.toggle($event)"  [image]="userData.profile_image" class="mr-2" shape="circle" />
+      <h2>{{this.userData.fullname}}</h2>
+      <p-menu #menu [model]="items" [popup]="true" class="menu mr-12" />
+    </div>
+  </div>
+</nav>
