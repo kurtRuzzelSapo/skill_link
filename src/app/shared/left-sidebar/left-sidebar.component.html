@@ -1,3 +1,35 @@
-<!-- <aside class="w-1/4 bg-gray-100 p-4 border-r">
-</aside> -->
-<p>Left Sidebar Content</p>
+<div class="bg-white rounded-3xl">
+  <div class="profile-card relative">
+    <img class="w-full h-48 object-cover rounded-xl" [src]="userRoleData.cover_image" alt="Cover Photo">
+    <div class="absolute top-24 left-5">
+      <img class="rounded-full border-4 border-white" [src]="userData.profile_image" width="140" height="auto" alt="Profile Picture">
+    </div>
+    <div class="profile-info mt-20 text-center pb-5">
+      <h2 class="text-2xl font-bold">{{userData.fullname | titlecase}}</h2>
+      <div class="font-semibold ">
+        <h2 class="p-2 border text-center rounded-2xl mt-3" [ngClass]="{
+          'bg-custom-teal text-white': userData?.role === 'intern',
+          'bg-custom-purple text-purple-800': userData?.role === 'recruiter'
+      }">
+        {{ userData?.role === 'intern' ? 'Intern' : 'Recruiter' }}
+      </h2>
+
+      <p>
+        <i class="pi pi-map-marker mr-1 mt-2"></i>
+        {{userData.address}}
+      </p>
+
+      <p>
+        <i class="pi pi-envelope mr-1 mt-2"></i>
+        {{userData.email}}
+      </p>
+
+      <p>
+        <i class="pi pi-phone mr-1 mt-2"></i>
+        {{userData.phone_number}}
+      </p>
+
+    </div>
+  </div>
+  </div>
+</div>

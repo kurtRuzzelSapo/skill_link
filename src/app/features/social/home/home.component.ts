@@ -5,10 +5,10 @@ import { SocialService } from '../../../core/services/social.service';
 import { CommonModule } from '@angular/common';
 import { GalleriaModule } from 'primeng/galleria';
 import { Subscription } from 'rxjs';
-
+import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, GalleriaModule],
+  imports: [CommonModule, GalleriaModule, TimeAgoPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -140,5 +140,36 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else if (processedPost.user.role === 'recruiter') {
       this.recruiterForums.unshift(processedPost);
     }
+  }
+
+
+  likePost(forumId: number, forum: any): void {
+    if (forum.isLiked) {
+      console.warn('Post is already liked.');
+      return;
+    }
+
+    const data = { forum_id: forumId, user_id: this.authService.getID() };
+
+    // Optimistic update
+    const previousLikesCount = forum.likes_count;
+    forum.likes_count++;
+    forum.isLiked = true;
+
+    this.socialService.likePost(data).subscribe({
+      next: (response: any) => {
+        console.log('Like successful:', response);
+      },
+      error: (error: any) => {
+        console.error('Error liking the post:', error);
+        // Rollback changes if the API call fails
+        forum.likes_count = previousLikesCount;
+        forum.isLiked = false;
+
+        if (error.status === 403) {
+          console.warn('You have already liked this post.');
+        }
+      },
+    });
   }
 }

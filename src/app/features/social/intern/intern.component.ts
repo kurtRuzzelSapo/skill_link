@@ -75,4 +75,34 @@ export class InternComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  likePost(forumId: number, forum: any): void {
+    if (forum.isLiked) {
+      console.warn('Post is already liked.');
+      return;
+    }
+
+    const data = { forum_id: forumId, user_id: this.authService.getID() };
+
+    // Optimistic update
+    const previousLikesCount = forum.likes_count;
+    forum.likes_count++;
+    forum.isLiked = true;
+
+    this.socialService.likePost(data).subscribe({
+      next: (response: any) => {
+        console.log('Like successful:', response);
+      },
+      error: (error: any) => {
+        console.error('Error liking the post:', error);
+        // Rollback changes if the API call fails
+        forum.likes_count = previousLikesCount;
+        forum.isLiked = false;
+
+        if (error.status === 403) {
+          console.warn('You have already liked this post.');
+        }
+      },
+    });
+  }
 }

@@ -1,3 +1,87 @@
-<!-- <aside class="w-1/4 bg-gray-100 p-4 border-l">
-</aside> -->
-<p>Right Sidebar Content</p>
+
+
+<div>
+
+  <!-- TOP FORUMS -->
+
+  <div class="bg-white font-bold p-3 text-xl flex items-center gap-2 ">
+    <i class="pi pi-star-fill text-yellow-400 " style="font-size: 1.5rem"></i>
+    <h1>Trending Forums</h1>
+  </div>
+
+<!--
+  <img
+  *ngIf="top.images && top.images.length > 0"
+  [src]="top.images[0].image_path"
+  alt="Forum Image"
+  class="feed-top-content"
+/> -->
+
+  <div class="flex flex-col md:flex-row overflow-hidden text-ellipsis bg-slate-50 mt-4 p-3 gap-4 shadow-sm rounded-md" *ngFor="let top of topForums">
+    <img *ngIf="top.images && top.images.length > 0"
+         [src]="top.images[0].image_path"
+         class="rounded-md object-cover w-16 h-16 md:w-24 xl-1745:hidden" >
+
+
+    <div class="flex flex-col justify-between">
+        <h1 class="font-semibold text-base hover:underline cursor-pointer">{{top.title | titlecase}}</h1>
+        <span class=" border text-center rounded-2xl w-16 text-xs" [ngClass]="{
+          'bg-custom-teal text-white': top?.user.role === 'intern',
+          'bg-custom-purple text-purple-800': top?.user.role === 'recruiter'
+        }">
+        {{ top?.user.role === 'intern' ? 'Intern' : 'Recruiter' }}
+      </span>
+        <p class="overflow-hidden text-ellipsis w-full md:w-64 h-6 whitespace-nowrap text-sm">
+          {{top.desc}}
+        </p>
+
+        <div class="flex gap-2 justify-between w-full font-medium mt-2 text-sm">
+            <div><i class="pi pi-thumbs-up mr-1" style="font-size: 1rem"></i>{{top.likes_count}}</div>
+            <div><i class="pi pi-comment mr-1" style="font-size: 1rem"></i>{{top.comments_count}}</div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- RECENT FORUMS -->
+
+  <div class="bg-white font-bold p-3 text-xl flex items-center gap-2 ">
+    <i class="pi pi-question-circle text-blue-400 " style="font-size: 1.5rem"></i>
+    <h1>Unanswered Forums</h1>
+  </div>
+
+  <div class="flex flex-col md:flex-row overflow-hidden text-ellipsis bg-slate-50 mt-4 p-3 gap-4 shadow-sm rounded-md" *ngFor="let top of  unansweredForums">
+    <img *ngIf="top.images && top.images.length > 0"
+         [src]="top.images[0].image_path"
+         class="rounded-md object-cover w-16 h-16 md:w-24 xl-1745:hidden" >
+
+
+    <div class="flex flex-col justify-between">
+      <h1 class="font-semibold text-base hover:underline cursor-pointer">{{top.title | titlecase}}</h1>
+      <span class=" border text-center rounded-2xl w-16 text-xs" [ngClass]="{
+        'bg-custom-teal text-white': top?.user.role === 'intern',
+        'bg-custom-purple text-purple-800': top?.user.role === 'recruiter'
+      }">
+      {{ top?.user.role === 'intern' ? 'Intern' : 'Recruiter' }}
+    </span>
+        <p class="overflow-hidden text-ellipsis w-full md:w-64 h-6 whitespace-nowrap text-sm">
+          {{top.desc}}
+        </p>
+
+        <div class="flex gap-2 justify-between w-full font-medium mt-2 text-sm">
+            <div><i class="pi pi-thumbs-up mr-1" style="font-size: 1rem"></i>{{top.likes_count}}</div>
+            <div><i class="pi pi-comment mr-1" style="font-size: 1rem"></i>{{top.comments_count}}</div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+
+

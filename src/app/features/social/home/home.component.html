@@ -25,12 +25,13 @@
 				<img [src]="forum.user.profile_image" alt="User Avatar" class="w-8 h-8 rounded-full">
 				<div>
 					<p class="text-gray-800 font-semibold">{{ forum.user.fullname | titlecase }}</p>
-          <span [ngClass]="{'bg-green-600 text-white px-2.5 py-0.5 rounded-lg text-sm font-medium': forum.user.role === 'intern',
-                  'bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-medium': forum.user.role === 'recruiter'
-          }">
+          <span [ngClass]="{
+            'bg-custom-teal text-white px-1 rounded-md':  forum.user.role === 'intern',
+            'bg-custom-purple text-purple-800 p-1 rounded-lg':  forum.user.role === 'recruiter'
+        }">
 {{ forum.user.role === 'intern' ? 'Intern' : 'Recruiter' }}
 </span>
-					<p class="text-gray-500 text-sm">Posted 2 hours ago</p>
+					<p class="text-gray-500 text-sm">{{ forum.created_at | timeAgo }}</p>
 				</div>
 			</div>
 			<div class="text-gray-500 cursor-pointer">
@@ -60,7 +61,7 @@
       [value]="forum.galleryImages"
       [numVisible]="5"
       [circular]="true"
-      [showItemNavigators]="forum.galleryImages.length > 1" 
+      [showItemNavigators]="forum.galleryImages.length > 1"
       [showThumbnails]="false"
       [responsiveOptions]="responsiveOptions"
       [containerStyle]="{ 'width': '100%', 'height': '600px', 'margin': '0 auto', 'background-color': 'rgb(18, 18, 18)' }"
@@ -95,7 +96,7 @@
 		<!-- Like and Comment Section -->
 		<div class="flex items-center justify-between text-gray-500">
 			<div class="flex items-center space-x-2">
-				<button class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
+				<button (click)="likePost(forum.id, forum)" class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
 					<svg class="w-5 h-5 fill-current" xmlns="https://i.pinimg.com/474x/52/87/55/52875518c52bc42ccf3ece51a0e9c1f7.jpg" viewBox="0 0 24 24">
 						<path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
 					</svg>
@@ -113,6 +114,8 @@
 				<span>{{ forum.comments_count }}</span>
 			</button>
 		</div>
+    <div *ngIf="forum.comments_count > 0">
+
 		<hr class="mt-2 mb-2">
 		<p class="text-gray-800 font-semibold">Comment</p>
 		<hr class="mt-2 mb-2">
@@ -141,8 +144,9 @@
 					<p class="text-gray-500 text-sm">That little furball is from a local shelter. You should check it out! 🏠😺</p>
 				</div>
 			</div>
-			<!-- Add more comments and replies as needed -->
 		</div>
+
+  </div>
     <!-- <div style="border-bottom: 1px solid gray; width: 100%;"></div> -->
 	</div>
 </div>
