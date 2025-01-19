@@ -17,7 +17,8 @@
   </div>
 </div>
 <div *ngIf="!isLoading">
-	<div *ngFor="let forum of forums" class="bg-white p-10 rounded-lg hover:shadow-md border-b border-gray-500" >
+  <div  class="bg-white p-10 rounded-lg hover:shadow-md border-b border-gray-500" >
+    <i class="pi pi-arrow-left hover:bg-slate-100" style="font-size: 1.5rem; border-radius: 10px; padding: 5px;" (click)="Back()"></i>
 		<!-- User Info with Three-Dot Menu -->
 		<div class="flex items-center justify-between mb-4">
 			<div class="flex items-center space-x-2">
@@ -47,7 +48,7 @@
 		</div>
 		<!-- Message -->
 		<div class="mb-4">
-			<p class="text-gray-800 text-xl font-bold">{{ forum.title | titlecase }}</p>
+			<p class="text-gray-800">{{ forum.title | titlecase }}</p>
 			<p class="text-gray-800">{{ forum.desc | titlecase }}</p>
       <!-- <a href="" class="text-blue-600">#AdventureCat</a> -->
 		</div>
@@ -69,7 +70,7 @@
       <ng-template #item let-item>
         <img [src]="item.itemImageSrc"
           class="max-w-full max-h-full object-contain cursor-pointer"
-          (click)="showFullImage(item.itemImageSrc)" />
+           />
       </ng-template>
 </p-galleria>
         <!-- <p-galleria class="w-full rounded-md [&_.p-galleria-item]:h-[600px] [&_.p-galleria-item]:flex [&_.p-galleria-item]:items-center [&_.p-galleria-item]:justify-center
@@ -103,7 +104,7 @@
 					<span>{{ forum.likes_count }}</span>
 				</button>
 			</div>
-			<button (click)="commentPost(forum.id, forum)" class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
+			<button  class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
 				<svg width="22px" height="22px" viewBox="0 0 24 24" class="w-5 h-5 fill-current" xmlns="https://i.pinimg.com/474x/52/87/55/52875518c52bc42ccf3ece51a0e9c1f7.jpg">
 					<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
 					<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -114,8 +115,135 @@
 				<span>{{ forum.comments_count }}</span>
 			</button>
 		</div>
+    <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="space-y-5 mt-3">
+      <div class="flex flex-col gap-2 mb-6">
+        <input
+          pInputText
+          formControlName="comment"
+          placeholder="Enter your comment"
+          id="username"
+          class="flex-auto border border-gray-300 rounded-full py-3 px-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all placeholder-gray-400 text-gray-900"
+          autocomplete="off"
+          (focus)="showButtons = true"
+        />
+      </div>
 
-    <!-- <div style="border-bottom: 1px solid gray; width: 100%;"></div> -->
+      <!-- Buttons will be shown conditionally -->
+      <div *ngIf="showButtons" class="flex gap-4 justify-end ">
+        <button
+          type="submit"
+          class="bg-custom-teal text-white px-3 rounded-lg hover:bg-indigo-600 transition flex items-center"
+        >
+        <i class="pi pi-send" style="font-size: 1.5rem"></i>
+        </button>
+        <button
+          type="button"
+          class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition"
+          (click)="cancelInput()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+
+
+    <div *ngIf="forum.comments_count > 0">
+
+		<hr class="mt-2 mb-2">
+		<p class="text-gray-800 font-semibold">Comment</p>
+		<hr class="mt-2 mb-2">
+		<div class="mt-4">
+			<!-- Comment 1 -->
+			<div class="space-y-4">
+        <div class="space-y-4">
+          <div class="space-y-4">
+            <div
+              class="flex flex-col  rounded-lg p-4 shadow-sm"
+              *ngFor="let comment of comments; let i = index"
+            >
+              <!-- Comment Header -->
+              <div class="flex items-start space-x-4">
+                <img
+                  [src]="comment.user.profile_image"
+                  alt="User Avatar"
+                  class="w-10 h-10 rounded-full border border-gray-300"
+                />
+                <div class="flex-1">
+                  <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                      <span class="font-medium text-gray-900">{{ comment.user?.fullname }}</span>
+                      <span class="text-xs text-gray-500">{{ comment.user?.role || 'recruiter' }}</span>
+                    </div>
+                    <span class="text-xs text-gray-400">{{ comment.created_at | date: 'short' }}</span>
+                  </div>
+                  <p class="text-gray-600 text-sm mt-2">{{ comment.comment }}</p>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center justify-start gap-4 mt-4">
+                <!-- <button
+                  class="flex items-center text-gray-500 hover:text-red-500 transition"
+                  (click)="toggleLike(i)"
+                >
+                  <i
+                    class="pi pi-heart text-lg"
+                    [class.text-red-500]="likedComments[i]"
+                  ></i>
+                  <span class="ml-2 text-sm">{{ likedComments[i] ? 'Liked' : 'Like' }}</span>
+                </button> -->
+                <button
+                  class="flex items-center text-gray-500 hover:text-blue-500 transition"
+                  (click)="toggleReplyForm(i)"
+                >
+                  <i class="pi pi-reply text-lg"></i>
+                  <span class="ml-2 text-sm">Reply</span>
+                </button>
+              </div>
+
+              <!-- Reply Form -->
+              <div *ngIf="replyFormIndex === i" class="mt-4">
+                <form  [formGroup]="replyForm" class="comment-form" (submit)="submitReply(comment.id, comment.forum_id)">
+                <textarea
+                  rows="3"
+                  class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  formControlName="reply"
+                  placeholder="Write your reply..."
+                ></textarea>
+                <div class="flex justify-end gap-2 mt-2">
+                  <button
+                    class="bg-gray-300 text-gray-800 px-4 py-1 rounded-lg hover:bg-gray-400 transition"
+                    (click)="cancelReplyForm()"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    class="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+                </form>
+              </div>
+
+              <div class="comment-child" *ngIf="comment.replies?.length">
+                <app-comment-thread
+                [comments]="comment.replies"
+                [replyForm]="replyForm"
+                [visibleFormId]="visibleFormId"
+                (submitReply)="submitReply($event.commentId, $event.forumId)">
+              </app-comment-thread>
+            </div>
+          </div>
+
+
+      </div>
+
+		</div>
+
+  </div>
+
 	</div>
 </div>
 

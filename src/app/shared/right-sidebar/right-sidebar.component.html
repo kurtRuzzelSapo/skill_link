@@ -1,87 +1,85 @@
-
-
 <div>
 
-  <!-- TOP FORUMS -->
-
-  <div class="bg-white font-bold p-3 text-xl flex items-center gap-2 ">
-    <i class="pi pi-star-fill text-yellow-400 " style="font-size: 1.5rem"></i>
-    <h1>Trending Forums</h1>
+  <!-- Skeleton Loader -->
+  <div *ngIf="isLoading" class="space-y-4 p-3">
+    <div *ngFor="let i of [1, 2, 3]" class="bg-white p-4 rounded-lg animate-pulse">
+      <div class="flex items-center space-x-4 mb-4">
+        <div class="w-12 h-12 bg-gray-200 rounded-full"></div>
+        <div class="flex-1">
+          <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/6 mt-2"></div>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+      </div>
+    </div>
   </div>
 
-<!--
-  <img
-  *ngIf="top.images && top.images.length > 0"
-  [src]="top.images[0].image_path"
-  alt="Forum Image"
-  class="feed-top-content"
-/> -->
+  <!-- Main Content (Hidden when loading) -->
+  <div *ngIf="!isLoading">
 
-  <div class="flex flex-col md:flex-row overflow-hidden text-ellipsis bg-slate-50 mt-4 p-3 gap-4 shadow-sm rounded-md" *ngFor="let top of topForums">
-    <img *ngIf="top.images && top.images.length > 0"
-         [src]="top.images[0].image_path"
-         class="rounded-md object-cover w-16 h-16 md:w-24 xl-1745:hidden" >
+    <!-- TOP FORUMS -->
+    <div class="bg-white font-bold p-3 text-lg flex items-center gap-2">
+      <i class="pi pi-star-fill text-yellow-400" style="font-size: 1.5rem"></i>
+      <h1 class="text-black">Trending Forums</h1>
+    </div>
 
+    <div class="flex flex-col md:flex-row overflow-hidden text-ellipsis bg-slate-50 mt-4 p-3 gap-4 shadow-sm rounded-md" *ngFor="let top of topForums">
+      <img *ngIf="top.images && top.images.length > 0"
+           [src]="top.images[0].image_path"
+           class="rounded-md object-cover w-16 h-16 md:w-24 xl-1745:hidden">
 
-    <div class="flex flex-col justify-between">
-        <h1 class="font-semibold text-base hover:underline cursor-pointer">{{top.title | titlecase}}</h1>
-        <span class=" border text-center rounded-2xl w-16 text-xs" [ngClass]="{
+      <div class="flex flex-col justify-between">
+        <h1 (click)="commentPost(top.id, top)" class="font-semibold text-base hover:underline cursor-pointer text-black">{{top.title | titlecase}}</h1>
+        <span class="border text-center rounded-2xl w-16 text-xs" [ngClass]="{
           'bg-custom-teal text-white': top?.user.role === 'intern',
           'bg-custom-purple text-purple-800': top?.user.role === 'recruiter'
         }">
         {{ top?.user.role === 'intern' ? 'Intern' : 'Recruiter' }}
       </span>
-        <p class="overflow-hidden text-ellipsis w-full md:w-64 h-6 whitespace-nowrap text-sm">
+        <p class="overflow-hidden text-ellipsis w-full md:w-64 h-6 whitespace-nowrap text-sm text-black">
           {{top.desc}}
         </p>
 
         <div class="flex gap-2 justify-between w-full font-medium mt-2 text-sm">
-            <div><i class="pi pi-thumbs-up mr-1" style="font-size: 1rem"></i>{{top.likes_count}}</div>
-            <div><i class="pi pi-comment mr-1" style="font-size: 1rem"></i>{{top.comments_count}}</div>
+          <div class="text-black"><i class="pi pi-heart-fill text-red-600 mr-1" style="font-size: 1rem"></i>{{top.likes_count}}</div>
+          <div class="text-black"><i class="pi pi-comment mr-1 text-custom-teal" style="font-size: 1rem"></i>{{top.comments_count}}</div>
         </div>
+      </div>
     </div>
-  </div>
 
+    <!-- RECENT FORUMS -->
+    <div class="bg-white font-bold p-3 text-lg flex items-center gap-2 mt-3">
+      <i class="pi pi-question-circle text-blue-400" style="font-size: 1.5rem"></i>
+      <h1 class="text-black">Unanswered Forums</h1>
+    </div>
 
+    <div class="flex flex-col md:flex-row overflow-hidden text-ellipsis bg-slate-50 mt-4 p-3 gap-4 shadow-sm rounded-md" *ngFor="let pot of unansweredForums">
+      <img *ngIf="pot.images && pot.images.length > 0"
+           [src]="pot.images[0].image_path"
+           class="rounded-md object-cover w-16 h-16 md:w-24 xl-1745:hidden">
 
-
-  <!-- RECENT FORUMS -->
-
-  <div class="bg-white font-bold p-3 text-xl flex items-center gap-2 ">
-    <i class="pi pi-question-circle text-blue-400 " style="font-size: 1.5rem"></i>
-    <h1>Unanswered Forums</h1>
-  </div>
-
-  <div class="flex flex-col md:flex-row overflow-hidden text-ellipsis bg-slate-50 mt-4 p-3 gap-4 shadow-sm rounded-md" *ngFor="let top of  unansweredForums">
-    <img *ngIf="top.images && top.images.length > 0"
-         [src]="top.images[0].image_path"
-         class="rounded-md object-cover w-16 h-16 md:w-24 xl-1745:hidden" >
-
-
-    <div class="flex flex-col justify-between">
-      <h1 class="font-semibold text-base hover:underline cursor-pointer">{{top.title | titlecase}}</h1>
-      <span class=" border text-center rounded-2xl w-16 text-xs" [ngClass]="{
-        'bg-custom-teal text-white': top?.user.role === 'intern',
-        'bg-custom-purple text-purple-800': top?.user.role === 'recruiter'
-      }">
-      {{ top?.user.role === 'intern' ? 'Intern' : 'Recruiter' }}
-    </span>
-        <p class="overflow-hidden text-ellipsis w-full md:w-64 h-6 whitespace-nowrap text-sm">
-          {{top.desc}}
+      <div class="flex flex-col justify-between">
+        <h1 (click)="commentPost(pot.id, pot)" class="font-semibold text-base hover:underline cursor-pointer text-black">{{pot.title | titlecase}}</h1>
+        <span class="border text-center rounded-2xl w-16 text-xs" [ngClass]="{
+          'bg-custom-teal text-white': pot?.user.role === 'intern',
+          'bg-custom-purple text-purple-800': pot?.user.role === 'recruiter'
+        }">
+        {{ pot?.user.role === 'intern' ? 'Intern' : 'Recruiter' }}
+      </span>
+        <p class="overflow-hidden text-ellipsis w-full md:w-64 h-6 whitespace-nowrap text-sm text-black">
+          {{pot.desc}}
         </p>
 
         <div class="flex gap-2 justify-between w-full font-medium mt-2 text-sm">
-            <div><i class="pi pi-thumbs-up mr-1" style="font-size: 1rem"></i>{{top.likes_count}}</div>
-            <div><i class="pi pi-comment mr-1" style="font-size: 1rem"></i>{{top.comments_count}}</div>
+          <div class="text-black"><i class="pi pi-heart-fill text-red-600 mr-1" style="font-size: 1rem "></i>{{pot.likes_count}}</div>
+          <div class="text-black"><i class="pi pi-comment mr-1 text-custom-teal" style="font-size: 1rem"></i>{{pot.comments_count}}</div>
         </div>
+      </div>
     </div>
+
   </div>
-
-
-
 
 </div>
-
-
-
-

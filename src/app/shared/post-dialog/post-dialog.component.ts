@@ -153,7 +153,7 @@ export class PostDialogComponent implements OnInit {
         next: (response) => {
           this.userRoleData = response.intern_profile ? response.intern_profile : response.recruiter_profile;
           this.userData = response.user;
-          console.log('User data fetched successfully:', response);
+          // console.log('User data fetched successfully:', response);
 
         },
         error: (error) => {

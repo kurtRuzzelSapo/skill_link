@@ -58,8 +58,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.userRoleData = response.intern_profile? response.intern_profile : response.recruiter_profile;
           this.userData = response.user;
-          console.log('User data fetched successfully:', response);
-          console.log("my data:", this.userData)
+          // console.log('User data fetched successfully:', response);
+          // console.log("my data:", this.userData)
           // this.userProfileImage = `${this.authService.apiUrl}${this.userData.profile_image}`;
         },
         error: (error) => {
@@ -97,10 +97,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         }));
 
         // ✅ Logging all the data for debugging
-        console.log("Top posts:", this.topForums);
-        console.log('Forums retrieved:', this.forums);
-        console.log('Intern posts:', this.internForums);
-        console.log('Recruiter posts:', this.recruiterForums);
+        // console.log("Top posts:", this.topForums);
+        // console.log('Forums retrieved:', this.forums);
+        // console.log('Intern posts:', this.internForums);
+        // console.log('Recruiter posts:', this.recruiterForums);
       },
       error: (error) => {
         console.error('Error retrieving forums:', error);
@@ -171,5 +171,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
     });
+  }
+
+  commentPost(postId: number, forum: any): void {
+    this.router.navigate(['/social/comment'], { state: { forum, postId } });
   }
 }

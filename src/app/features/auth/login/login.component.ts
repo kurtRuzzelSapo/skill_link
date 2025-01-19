@@ -9,6 +9,8 @@ import { FloatLabelModule } from "primeng/floatlabel"
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { MessageService } from 'primeng/api';
+import { Toast } from 'primeng/toast';
 
 type BackendErrors = {
   [key: string]: string[]; // Each field can have an array of error messages
@@ -25,18 +27,20 @@ type BackendErrors = {
     FormsModule,
     FloatLabelModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    Toast
   ],
+  providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent  {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   backendErrors: BackendErrors | null = null; // Allow null initially
 
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,private messageService: MessageService) {
     this.loginForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -45,6 +49,9 @@ export class LoginComponent  {
     );
   }
 
+  ngOnInit(): void {
+    this.fetchUserData()
+  }
 
   get email() {
     return this.loginForm.get('email');
@@ -71,6 +78,7 @@ export class LoginComponent  {
 
         },
         error: (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid Credentials' });
           console.error('Login failed:', error);
 
           // Reset backendErrors
@@ -78,6 +86,7 @@ export class LoginComponent  {
 
           if (error.status === 422) {
             // Validation errors (e.g., field-specific errors)
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid Credentials' });
             this.backendErrors = error.error.errors;
           } else if (error.status === 403) {
             // General errors (e.g., "Invalid credentials")
@@ -90,6 +99,30 @@ export class LoginComponent  {
       });
     } else {
       console.log('Form is invalid');
+    }
+  }
+
+  fetchUserData(): void {
+    const userId = this.authService.getID();
+    if (userId) {
+      this.authService.getMyData(+userId).subscribe({
+        next: (response) => {
+          // this.userRoleData = response.intern_profile ? response.intern_profile : response.recruiter_profile;
+          // this.userData = response.user;
+          // console.log('User data fetched successfully:', response);
+          this.router.navigate(['/social/home']);
+
+        },
+        error: (error) => {
+          console.error('Failed to fetch user data:', error);
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
+        },
+      });
+    } else {
+      console.error('No user ID found in local storage.');
+      this.router.navigate(['/login']);
     }
   }
 }

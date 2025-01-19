@@ -18,14 +18,28 @@ export class SocialService {
     return this.http.post<any>(`${this.apiUrl}/forum`, data, { headers });
 }
 
-getForums(): Observable<any> {
+  getForums(): Observable<any> {
   const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
   return this.http.get<any>(`${this.apiUrl}/forum`, { headers });
 }
 
-likePost(data:any): Observable<any> {
+  likePost(data:any): Observable<any> {
   const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
   return this.http.post<any>(`${this.apiUrl}/like/forum`, data, { headers });
+}
+
+  addComment(data: any): Observable<any> {
+  const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
+  return this.http.post<any>(`${this.apiUrl}/comment`, data, { headers });
+}
+  addReply(data: any): Observable<any> {
+  const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
+  return this.http.post<any>(`${this.apiUrl}/reply`, data, { headers });
+}
+
+getComments(forumId:any): Observable<any> {
+  const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
+  return this.http.get<any>(`${this.apiUrl}/comments/${forumId}`, { headers });
 }
 
 

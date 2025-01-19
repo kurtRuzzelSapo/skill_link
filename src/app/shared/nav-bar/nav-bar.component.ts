@@ -37,7 +37,7 @@ constructor(private router: Router, private authService: AuthService ){}
         next: (response) => {
           this.userRoleData = response.intern_profile ? response.intern_profile : response.recruiter_profile;
           this.userData = response.user;
-          console.log('User data fetched successfully:', response);
+          // console.log('User data fetched successfully:', response);
 
           // Initialize items after fetching user data
           this.items = [

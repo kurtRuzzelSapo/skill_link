@@ -1,35 +1,60 @@
 <div class="bg-white rounded-3xl">
-  <div class="profile-card relative">
+
+  <!-- Skeleton Loader -->
+  <div *ngIf="isLoading" class="animate-pulse">
+    <!-- Cover Image Placeholder -->
+    <div class="w-full h-48 bg-gray-200 rounded-xl"></div>
+
+    <!-- Profile Image and Info Placeholder -->
+    <div class="relative">
+      <div class="absolute top-4 left-5">
+        <!-- <div class="w-36 h-36 bg-gray-200 rounded-full border-4 border-white"></div> -->
+      </div>
+      <div class="profile-info mt-20 text-center pb-5">
+        <div class="h-6 bg-gray-200 rounded w-1/3 mx-auto mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-1/4 mx-auto mb-2"></div>
+        <div class="space-y-2">
+          <div class="h-4 bg-gray-200 rounded w-1/3 mx-auto"></div>
+          <div class="h-4 bg-gray-200 rounded w-1/4 mx-auto"></div>
+          <div class="h-4 bg-gray-200 rounded w-1/5 mx-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Card Content -->
+  <div *ngIf="!isLoading" class="profile-card relative">
     <img class="w-full h-48 object-cover rounded-xl" [src]="userRoleData.cover_image" alt="Cover Photo">
     <div class="absolute top-24 left-5">
       <img class="rounded-full border-4 border-white" [src]="userData.profile_image" width="140" height="auto" alt="Profile Picture">
     </div>
     <div class="profile-info mt-20 text-center pb-5">
       <h2 class="text-2xl font-bold">{{userData.fullname | titlecase}}</h2>
-      <div class="font-semibold ">
+      <div class="font-semibold">
         <h2 class="p-2 border text-center rounded-2xl mt-3" [ngClass]="{
           'bg-custom-teal text-white': userData?.role === 'intern',
           'bg-custom-purple text-purple-800': userData?.role === 'recruiter'
-      }">
-        {{ userData?.role === 'intern' ? 'Intern' : 'Recruiter' }}
-      </h2>
+        }">
+          {{ userData?.role === 'intern' ? 'Intern' : 'Recruiter' }}
+        </h2>
 
-      <p>
-        <i class="pi pi-map-marker mr-1 mt-2"></i>
-        {{userData.address}}
-      </p>
+        <p>
+          <i class="pi pi-map-marker mr-1 mt-2"></i>
+          {{userData.address}}
+        </p>
 
-      <p>
-        <i class="pi pi-envelope mr-1 mt-2"></i>
-        {{userData.email}}
-      </p>
+        <p>
+          <i class="pi pi-envelope mr-1 mt-2"></i>
+          {{userData.email}}
+        </p>
 
-      <p>
-        <i class="pi pi-phone mr-1 mt-2"></i>
-        {{userData.phone_number}}
-      </p>
+        <p>
+          <i class="pi pi-phone mr-1 mt-2"></i>
+          {{userData.phone_number}}
+        </p>
 
+      </div>
     </div>
   </div>
-  </div>
+
 </div>

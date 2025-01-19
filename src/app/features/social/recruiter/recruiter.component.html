@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="mb-4">
-      <p class="text-gray-800">{{ forum.title }}</p>
+      <p class="text-gray-800 text-xl font-bold">{{ forum.title | titlecase }}</p>
       <p class="text-gray-800">{{ forum.desc }}</p>
     </div>
     <div class="mb-4">
@@ -68,7 +68,7 @@
           <span>{{ forum.likes_count }}</span>
         </button>
       </div>
-      <button class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
+      <button (click)="commentPost(forum.id, forum)" class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
         <svg width="22px" height="22px" viewBox="0 0 24 24" class="w-5 h-5 fill-current" xmlns="https://i.pinimg.com/474x/52/87/55/52875518c52bc42ccf3ece51a0e9c1f7.jpg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -79,39 +79,7 @@
         <span>{{ forum.comments_count }}</span>
       </button>
     </div>
-    <div *ngIf="forum.comments_count > 0">
 
-      <hr class="mt-2 mb-2">
-      <p class="text-gray-800 font-semibold">Comment</p>
-      <hr class="mt-2 mb-2">
-      <div class="mt-4">
-        <!-- Comment 1 -->
-        <div class="flex items-center space-x-2">
-          <img src="https://placekitten.com/32/32" alt="User Avatar" class="w-6 h-6 rounded-full">
-          <div>
-            <p class="text-gray-800 font-semibold">Jane Smith</p>
-            <p class="text-gray-500 text-sm">Lovely shot! 📸</p>
-          </div>
-        </div>
-        <!-- Comment 2 -->
-        <div class="flex items-center space-x-2 mt-2">
-          <img src="https://placekitten.com/32/32" alt="User Avatar" class="w-6 h-6 rounded-full">
-          <div>
-            <p class="text-gray-800 font-semibold">Bob Johnson</p>
-            <p class="text-gray-500 text-sm">I can't handle the cuteness! Where can I get one?</p>
-          </div>
-        </div>
-        <!-- Reply from John Doe with indentation -->
-        <div class="flex items-center space-x-2 mt-2 ml-6">
-          <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-6 h-6 rounded-full">
-          <div>
-            <p class="text-gray-800 font-semibold">John Doe</p>
-            <p class="text-gray-500 text-sm">That little furball is from a local shelter. You should check it out! 🏠😺</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
 
   </div>
 </div>

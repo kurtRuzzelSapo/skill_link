@@ -1,34 +1,54 @@
+<div class="bg-gray-800 text-white h-screen w-72 flex flex-col items-center py-4 overflow-y-auto">
+  <!-- Profile Card -->
+  <div class="w-full px-4">
+    <div class="relative">
+      <!-- Cover Image -->
+      <img
+        class="w-full h-32 object-cover rounded-xl"
+        [src]="userRoleData.cover_image"
+        alt="Cover Photo"
+      />
+      <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
+        <!-- Profile Image -->
+        <img
+          class="rounded-full border-4 border-gray-800 object-cover"
+          [src]="userData.profile_image"
+          width="96"
+          height="96"
+          alt="Profile Picture"
+        />
+      </div>
+    </div>
 
-  <p-menu [model]="items" class="flex justify-center text-white bg-white h-auto" styleClass="w-full h-screen bg-white  ">
-    <ng-template #start >
-        <button pRipple class="relative overflow-hidden w-full border-0 bg-transparent flex items-end p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200">
-            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" class="mr-2" shape="circle" />
-            <span class="inline-flex flex-col" >
-                <span class="font-bold">Amy Elsner</span>
-                <span class="text-sm">Admin</span>
-            </span>
-        </button>
-    </ng-template>
-      <ng-template #end class="border-t-2">
-          <span class="inline-flex items-center gap-1 px-2 py-2 ">
-            <!-- <img src="skill-high-resolution-logo-blue.png" alt="Logo" width="70px" height="auto"> -->
-              <!-- <span class="text-xl font-semibold">Skill<span class="text-primary">Link</span></span> -->
-              <i class="pi pi-sign-out"></i>
-            <p>Logout</p>
-          </span>
-      </ng-template>
-      <ng-template class="line" #submenuheader let-item>
-          <span  class="text-primary font-bold wew">{{ item.label }}</span>
-      </ng-template>
+    <div class="profile-info mt-16 text-center">
+      <h2 class="text-lg font-bold truncate">{{ userData.fullname || 'John Doe' | titlecase }}</h2>
+      <div class="mt-2">
+        <h2
+          class="p-1 text-xs rounded-xl truncate"
+          [ngClass]="{
+            'bg-teal-500 text-white': userData?.role === 'intern',
+            'bg-purple-500 text-purple-800': userData?.role === 'recruiter'
+          }"
+        >
+          {{ userData?.role || 'intern' | titlecase }}
+        </h2>
+        <p class="text-sm mt-2 flex items-center justify-center gap-1 truncate">
+          <i class="pi pi-map-marker"></i> {{ userData.address || 'No Address' }}
+        </p>
+        <p class="text-sm mt-2 flex items-center justify-center gap-1 truncate">
+          <i class="pi pi-envelope"></i> {{ userData.email || 'email@example.com' }}
+        </p>
+        <p class="text-sm mt-2 flex items-center justify-center gap-1 truncate">
+          <i class="pi pi-phone"></i> {{ userData.phone_number || '+123456789' }}
+        </p>
+      </div>
+    </div>
+  </div>
 
-      <ng-template #item let-item>
-          <a  class="flex items-center p-menu-item-link">
-              <span [class]="item.icon"></span>
-              <span class="ml-2 text-white">{{ item.label }}</span>
-              <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" />
-              <span *ngIf="item.shortcut" class="ml-auto border border-surface  bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
-          </a>
-      </ng-template>
-    <!-- </div> -->
-  </p-menu>
-
+  <app-right-sidebar></app-right-sidebar>
+  <div (click)="Logout()" class="mt-2 flex justify-start">
+    <p class="text-sm mt-2 flex items-start justify-start gap-1 truncate hover:underline ">
+      <i class="pi pi-sign-out"></i> Logout
+    </p>
+  </div>
+</div>

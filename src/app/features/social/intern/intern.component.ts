@@ -105,4 +105,8 @@ export class InternComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  commentPost(postId: number, forum: any): void {
+    this.router.navigate(['/social/comment'], { state: { forum, postId } });
+  }
 }

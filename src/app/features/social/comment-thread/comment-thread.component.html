@@ -1,0 +1,87 @@
+<div class="w-full max-w-4xl">
+  <!-- Single Comment Thread -->
+  <div *ngFor="let comment of comments" class="mb-4">
+    <div class=" rounded-lg p-4">
+      <!-- Comment Header -->
+      <div class="flex items-start gap-3 pl-2">
+        <img
+          [src]="comment.user?.profile_image || 'assets/default-avatar.png'"
+          [alt]="comment.user?.fullname + '\'s avatar'"
+          class="w-8 h-8 rounded-full object-cover"
+        />
+        <div class="flex-1">
+          <!-- User Info -->
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+              <span class="font-medium text-gray-900">{{ comment.user?.fullname }}</span>
+              <span class="text-xs text-gray-500">{{ comment.user?.role || 'recruiter' }}</span>
+            </div>
+            <span class="text-xs text-gray-400">{{ comment.created_at | date: 'short' }}</span>
+          </div>
+
+          <!-- Comment Content -->
+          <p class="mt-2 text-gray-800">{{ comment.comment }}</p>
+
+          <!-- Comment Actions -->
+          <div class="flex items-center justify-start gap-4 mt-4">
+            <!-- <button
+              class="flex items-center text-gray-500 hover:text-red-500 transition"
+              (click)="toggleLike(i)"
+            >
+              <i
+                class="pi pi-heart text-lg"
+                [class.text-red-500]="likedComments[i]"
+              ></i>
+              <span class="ml-2 text-sm">{{ likedComments[i] ? 'Liked' : 'Like' }}</span>
+            </button> -->
+            <button
+              class="flex items-center text-gray-500 hover:text-blue-500 transition"
+              (click)="showFormComment(comment.id)"
+            >
+              <i class="pi pi-reply text-lg"></i>
+              <span class="ml-2 text-sm">Reply</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reply Form -->
+      <div *ngIf="visibleFormId === comment.id" class="mt-4">
+        <form  [formGroup]="replyForm" class="comment-form" (submit)="onSubmitReply(comment.id, comment.forum_id)">
+        <textarea
+          rows="3"
+          class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          formControlName="reply"
+          placeholder="Write your reply..."
+        ></textarea>
+        <div class="flex justify-end gap-2 mt-2">
+          <button
+            class="bg-gray-300 text-gray-800 px-4 py-1 rounded-lg hover:bg-gray-400 transition"
+            (click)="cancelReply()"
+          >
+            Cancel
+          </button>
+          <button
+            class="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Nested Replies -->
+    <div *ngIf="comment.replies?.length > 0"
+         class="ml-8 pl-8 border-l-2 border-gray-200 mt-2">
+      <app-comment-thread
+        [comments]="comment.replies"
+        [replyForm]="replyForm"
+        [visibleFormId]="visibleFormId"
+        (submitReply)="onSubmitReply($event.commentId, $event.forumId)"
+      >
+      </app-comment-thread>
+    </div>
+  </div>
+</div>
