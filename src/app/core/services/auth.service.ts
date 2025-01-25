@@ -83,8 +83,11 @@ export class AuthService {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http.post<any>(`${this.apiUrl}/login`, user, { headers });
     }
+    updateProfile(data: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.apiUrl}/updateProfile`, data, { headers });
+}
 
-    
 
 
 

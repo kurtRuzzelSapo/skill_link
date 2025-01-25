@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="mb-4">
-      <p class="text-gray-800 text-xl font-bold">{{ forum.title | titlecase }}</p>
+      <p class="text-gray-800 text-xl font-bold hover:cursor-pointer" (click)="Visit(forum.user_id)">{{ forum.title | titlecase }}</p>
       <p class="text-gray-800">{{ forum.desc }}</p>
     </div>
     <div class="mb-4">

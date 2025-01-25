@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         // ✅ Logging all the data for debugging
         // console.log("Top posts:", this.topForums);
-        // console.log('Forums retrieved:', this.forums);
+        console.log('Forums retrieved:', this.forums);
         // console.log('Intern posts:', this.internForums);
         // console.log('Recruiter posts:', this.recruiterForums);
       },
@@ -175,5 +175,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   commentPost(postId: number, forum: any): void {
     this.router.navigate(['/social/comment'], { state: { forum, postId } });
+  }
+
+  Visit(userId: number) {
+    this.router.navigate([`/visit`], { state: { userId } });
   }
 }

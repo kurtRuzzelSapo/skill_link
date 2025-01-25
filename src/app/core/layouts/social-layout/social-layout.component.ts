@@ -56,8 +56,6 @@ export class SocialLayoutComponent implements OnInit {
           this.showPostButton = false;
         }
       });
-
-
     }
 
 

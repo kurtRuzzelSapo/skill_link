@@ -118,6 +118,7 @@ export class PostDialogComponent implements OnInit {
     const formData = new FormData();
     formData.append('title', this.postForm.get('title')?.value);
     formData.append('desc', this.postForm.get('desc')?.value);
+    formData.append('user_id', this.userData.id);
 
     // Use the raw file for FormData
     this.files.forEach((file, index) => {

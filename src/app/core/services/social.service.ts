@@ -43,4 +43,21 @@ getComments(forumId:any): Observable<any> {
 }
 
 
+// getMyForumById(id:any): Observable<any> {
+//   const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
+//   return this.http.get<any>(`${this.apiUrl}/user/${id}/forums`, { headers });
+// }
+
+getMyInterviews(id: any): Observable<any> {
+  const headers = this.authService.getAuthHeaders();
+  return this.http.get<any>(`${this.apiUrl}/interviews/${id}}`, { headers });
+}
+
+
+getMyForumById(id: number): Observable<any> {
+  const headers = this.authService.getAuthHeaders(); // Ensure this method returns the correct headers with the token
+  return this.http.get<any>(`${this.apiUrl}/user/${id}/forums`, { headers });
+}
+
+
 }
