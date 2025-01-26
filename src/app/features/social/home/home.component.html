@@ -17,7 +17,7 @@
   </div>
 </div>
 <div *ngIf="!isLoading">
-	<div *ngFor="let forum of forums" class="bg-white p-10 rounded-lg hover:shadow-md border-b border-gray-500" >
+	<div *ngFor="let forum of forums " class="bg-white p-10 rounded-lg hover:shadow-md border-b border-gray-500" >
 		<!-- User Info with Three-Dot Menu -->
 		<div class="flex items-center justify-between mb-4">
 			<div class="flex items-center space-x-2">
@@ -47,6 +47,7 @@
 		</div>
 		<!-- Message -->
 		<div class="mb-4">
+      <span class="bg-custom-teal text-white p-1 text-xs rounded-full">{{forum.specialization | titlecase}}</span>
 			<p class="text-gray-800 text-xl font-bold">{{ forum.title | titlecase }}</p>
 			<p class="text-gray-800">{{ forum.desc | titlecase }}</p>
       <!-- <a href="" class="text-blue-600">#AdventureCat</a> -->

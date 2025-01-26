@@ -65,6 +65,12 @@ export class AuthService {
         this.router.navigateByUrl('/login'); // Redirect to a fallback (e.g., login) for invalid roles
       }
     }
+    // specializations/post
+
+    getSpecializations(): Observable<any> {
+      const headers = this.getAuthHeaders(); // Ensure this method returns the correct headers with the token
+      return this.http.get<any>(`${this.apiUrl}/specializations/post`, { headers });
+    }
 
     getMyData(id: number): Observable<any> {
       const headers = this.getAuthHeaders();
@@ -86,6 +92,10 @@ export class AuthService {
     updateProfile(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.apiUrl}/updateProfile`, data, { headers });
+}
+    getMyFilterForums(user_id: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.get<any>(`${this.apiUrl}/specializations/myFilter/${user_id}`, { headers });
 }
 
 

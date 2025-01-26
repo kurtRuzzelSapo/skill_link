@@ -16,10 +16,13 @@ import { SocialService } from '../../core/services/social.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { Select } from 'primeng/select';
+
+
 @Component({
   selector: 'app-post-dialog',
   standalone: true,
-  imports: [Dialog, ButtonModule, TextareaModule, InputTextModule, AvatarModule, FileUpload, BadgeModule, ProgressBar, ToastModule, CommonModule, ReactiveFormsModule],
+  imports: [Dialog , ButtonModule, TextareaModule, InputTextModule, AvatarModule, FileUpload, BadgeModule, ProgressBar, ToastModule, CommonModule, ReactiveFormsModule],
   providers: [MessageService, RouterModule],
   templateUrl: './post-dialog.component.html',
   styleUrl: './post-dialog.component.css'
@@ -35,15 +38,27 @@ export class PostDialogComponent implements OnInit {
   totalSizePercent: number = 0;
   postForm: FormGroup;
   isSubmitting = false;
+  specializations: any[] = [];
   constructor(private config: PrimeNG, private messageService: MessageService, private fb: FormBuilder, private authService: AuthService, private socialService: SocialService,private router: Router) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required]],
-      desc: ['', [Validators.required]]
+      desc: ['', [Validators.required]],
+      specialization: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
+
+  //   this.specializations = [
+  //     { name: 'New York', code: 'NY' },
+  //     { name: 'Rome', code: 'RM' },
+  //     { name: 'London', code: 'LDN' },
+  //     { name: 'Istanbul', code: 'IST' },
+  //     { name: 'Paris', code: 'PRS' }
+  // ];
+    // this.authService.getSpecializations();
     this.fetchUserData()
+    this.getSpecializations()
   }
 
   onClose() {
@@ -118,7 +133,9 @@ export class PostDialogComponent implements OnInit {
     const formData = new FormData();
     formData.append('title', this.postForm.get('title')?.value);
     formData.append('desc', this.postForm.get('desc')?.value);
+    formData.append('specialization', this.postForm.get('specialization')?.value);
     formData.append('user_id', this.userData.id);
+
 
     // Use the raw file for FormData
     this.files.forEach((file, index) => {
@@ -168,6 +185,60 @@ export class PostDialogComponent implements OnInit {
       console.error('No user ID found in local storage.');
       this.router.navigate(['/login']);
     }
+  }
+
+
+  getSpecializations(): void {
+    const userId = this.authService.getID();
+    if (userId) {
+      this.authService.getSpecializations().subscribe({
+        next: (response) => {
+          console.log('Specializations', response)
+          console.log('Specializations DATA', response.data)
+          this.specializations = response.data
+
+          // this.userRoleData = response.intern_profile? response.intern_profile : response.recruiter_profile;
+          // this.userData = response.user;
+          // console.log('User data fetched successfully:', response);
+          // console.log("my data:", this.userData)
+          // this.userProfileImage = `${this.authService.apiUrl}${this.userData.profile_image}`;
+        },
+        error: (error) => {
+          console.error('Failed to fetch user data:', error);
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
+        },
+      });
+    } else {
+      console.error('No user ID found in local storage.');
+      this.router.navigate(['/login']);
+    }
+  }
+
+  getFilterForums(){
+
+    const userId = this.authService.getID();
+    if (userId) {
+      this.authService.getMyData(+userId).subscribe({
+        next: (response) => {
+          this.userRoleData = response.intern_profile ? response.intern_profile : response.recruiter_profile;
+          this.userData = response.user;
+          // console.log('User data fetched successfully:', response);
+
+        },
+        error: (error) => {
+          console.error('Failed to fetch user data:', error);
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
+        },
+      });
+    } else {
+      console.error('No user ID found in local storage.');
+      this.router.navigate(['/login']);
+    }
+    
   }
 
 

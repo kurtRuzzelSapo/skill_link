@@ -53,7 +53,8 @@ export class RightSidebarComponent implements OnInit, OnDestroy {
    * Fetch the forums data manually (can be triggered by events if needed)
    */
   getForums(): void {
-    const subscription = this.socialService.getForums().subscribe({
+    const user_id = this.authService.getID();
+    const subscription = this.authService.getMyFilterForums(user_id).subscribe({
       next: (response) => this.processForums(response),
       error: (error) => this.handleError(error),
     });

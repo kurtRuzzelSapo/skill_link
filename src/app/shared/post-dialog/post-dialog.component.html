@@ -19,6 +19,26 @@
           <!-- <label for="email" class="font-semibold w-24">Description</label> -->
           <textarea rows="5" placeholder="Description" cols="30" pTextarea class="flex-auto" formControlName="desc"></textarea>
       </div>
+      <div class="flex items-center gap-4 mb-2">
+
+        <!-- <p-select [options]="specializations" optionLabel="name" placeholder="Select a City" class="w-full md:w-56 flex-auto" /> -->
+
+           <select
+            class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+            id="dropdown"
+            name="dropdown"
+            formControlName="specialization"
+            >
+
+            <option  *ngFor="let select of specializations" class="text-gray-700 bg-white hover:bg-gray-100 w-1" value="{{select.specialization}}">
+              {{select.specialization | titlecase}}
+            </option>
+
+          </select>
+        </div>
+
+
+
 
       <div class="card">
         <p-toast />

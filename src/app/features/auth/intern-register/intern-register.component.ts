@@ -32,6 +32,7 @@ import { Toast } from 'primeng/toast';
   styleUrl: './intern-register.component.css'
 })
 export class InternRegisterComponent implements OnInit {
+  specializations: string[] = [];
   errorMessage: string | null = null;
   backendErrors: { [key: string]: string[] } | null = null;
   activeStep: number = 1;
@@ -40,6 +41,7 @@ export class InternRegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,  private router: Router,
     private authService: AuthService, private messageService: MessageService) {
+
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       fullname: ['', Validators.required],
@@ -48,6 +50,9 @@ export class InternRegisterComponent implements OnInit {
       gender: ['', Validators.required],
       school: ['', Validators.required],
       degree: ['', Validators.required],
+      hobbies: ['', Validators.required],
+      interest: ['', Validators.required],
+      specialization:[''],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password_confirmation: ['', Validators.required]
     }, {
@@ -58,6 +63,39 @@ export class InternRegisterComponent implements OnInit {
   ngOnInit() {
     this.formErrors$.subscribe(errors => console.log('Form Errors:', errors));
   }
+
+  addSkill(): void {
+    const newSpel = this.signupForm.get('specialization')?.value?.trim();
+    if (newSpel && !this.specializations.includes(newSpel)) {
+      this.specializations.push(newSpel);
+      this.signupForm.get('specialization')?.reset(); // Clear input after adding
+    } else if (this.specializations.includes(newSpel)) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Duplicate Skill',
+        detail: 'This skill already exists.',
+        life: 2000
+      });
+    }
+  }
+
+
+
+  onKeyUp(event: KeyboardEvent): void {
+    const input = (event.target as HTMLInputElement).value.trim();
+    if (event.key === 'Enter' && input) { // Add specialization on Enter key
+      if (!this.specializations.includes(input)) {
+        this.specializations.push(input); // Add to the array
+      }
+      this.signupForm.get('specialization')?.setValue(''); // Clear input field
+    }
+  }
+
+  // Method to remove a specialization
+  removeSkill(skill: string): void {
+    this.specializations = this.specializations.filter(s => s !== skill); // Remove from array
+  }
+
 
   // getFormErrors(): Observable<any> {
   //   return combineLatest([
@@ -102,7 +140,12 @@ export class InternRegisterComponent implements OnInit {
 
   registerIntern(): void {
     if (this.signupForm.valid) {
-      this.authService.registerIntern(this.signupForm.value).subscribe({
+
+      const formData = {
+        ...this.signupForm.value,
+        specialization: this.specializations, // Ensure this is an array
+      };
+      this.authService.registerIntern(formData).subscribe({
         next: (response) => {
           console.log(response);
           this.authService.setLoginData(response.token, response.role, response.id);
@@ -133,4 +176,6 @@ export class InternRegisterComponent implements OnInit {
     //     this.router.navigate(['/login']);
     // }, 3000); // Navigate to login after 3 seconds
 }
+
+
 }
