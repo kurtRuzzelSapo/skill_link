@@ -45,6 +45,21 @@
     <p>{{this.userRoleData.about}}</p>
   </div>
 
+  <div class="modern-card about-section">
+    <div class="edit-icon" >
+      <!-- <mat-icon>edit</mat-icon> -->
+    </div>
+    <h3>Interest</h3>
+    <p>{{this.userData.interest}}</p>
+  </div>
+  <div class="modern-card about-section">
+    <div class="edit-icon" >
+      <!-- <mat-icon>edit</mat-icon> -->
+    </div>
+    <h3>Hobbies</h3>
+    <p>{{this.userData.hobbies}}</p>
+  </div>
+
   <!-- Skills Section -->
   <!-- <div class="modern-card skills-section">
     <div class="edit-icon" >
@@ -88,78 +103,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-  <!-- Experience Section -->
-  <!-- <div class="modern-card experience-section">
-    <div class="edit-icon">
-    </div>
-    <h3>Resume</h3>
-    <p *ngIf="!resumeUrl">No Resume Uploaded</p>
-    <p *ngIf="resumeUrl"><a [href]="resumeUrl" target="_blank">View Resume</a></p>
-
-    <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" #fileInput (change)="onFileSelected($event)" style="display:none;" />
-    <button mat-button (click)="fileInput.click()">Select File</button>
-    <button mat-button color="primary" (click)="uploadFile()" [disabled]="!selectedFile">Upload File</button>
-</div> -->
-
-<!-- <div class="modern-card experience-section">
-  <div class="card-header">
-    <h3>Resume</h3>
-    <mat-icon class="edit-icon">description</mat-icon>
-  </div>
-
-  <div class="resume-status">
-    <a *ngIf="resumeUrl"
-       [href]="resumeUrl"
-       target="_blank"
-       class="resume-link">
-      <mat-icon>description</mat-icon>
-      View Current Resume
-    </a>
-  </div>
-
-
-  <ng-template #downloadFile>
-    <a [href]="userRoleData.resume_url" download>
-      Click to download
-    </a>
-  </ng-template>
-
-  <div *ngIf="selectedFile" class="file-preview">
-    <p class="preview-title">Selected File:</p>
-    <span class="file-name">{{ selectedFile.name }}</span>
-    <div class="file-info">
-      <mat-icon>insert_drive_file</mat-icon>
-      <span class="file-size">({{ formatFileSize(selectedFile.size) }})</span>
-    </div>
-  </div> -->
-
-
-  <!-- Upload Controls -->
-  <!-- <div class="upload-controls">
-    <input
-      type="file"
-      #fileInput
-      accept=".pdf,.doc,.docx,.jpg,.png"
-      (change)="onFileSelected($event)"
-      style="display:none;"
-    />
-    <button
-      mat-stroked-button
-      (click)="fileInput.click()">
-      Select File
-    </button>
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="uploadFile()"
-      [disabled]="!selectedFile || isUploading">
-      {{ isUploading ? 'Uploading...' : 'Upload File' }}
-    </button>
-  </div> -->
 </div>
 
 
