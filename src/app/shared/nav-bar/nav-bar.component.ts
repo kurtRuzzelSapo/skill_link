@@ -47,6 +47,14 @@ constructor(private router: Router, private authService: AuthService ){}
                 {
                   label: 'Profile',
                   icon: 'pi pi-user',
+                  command: () => {
+                    if(this.userData.role == 'intern'){
+                      this.router.navigate(['/profile']);
+                    }else{
+                      this.router.navigate(['/profileRec']);
+                    }
+                    // this.authService.clearUserData();
+                  },
                 },
                 {
                   label: 'Log out',

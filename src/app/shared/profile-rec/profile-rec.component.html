@@ -1,0 +1,318 @@
+<div class="bg-white shadow p-4 flex items-center">
+  <!-- Mobile Menu Button - Only visible on mobile -->
+   <div class="md:hidden">
+     <button pButton
+     class="block md:hidden "
+     icon="pi pi-bars"
+     severity="info"
+  >
+    </button>
+  </div>
+  <div class="flex-1">
+    <app-nav-bar></app-nav-bar>
+  </div>
+</div>
+
+<div class="main-container">
+  <!-- Profile Section -->
+  <div class="profile-card modern-card">
+    <img class="profile-header" style="width: 100%; height: auto;" [src]="this.userRoleData.cover_image" alt="">
+
+    <div class="profile-body">
+      <div class="edit-icon" (click)="openModal()">
+        <button><i class="pi pi-file-edit" style="font-size: 1rem"></i></button>
+      </div>
+      <img class="profile-image" [src]="this.userData.profile_image" alt="">
+      <div class="profile-info">
+        <h3>{{this.userData.fullname}}</h3>
+        <p>{{this.userData.address}}</p>
+        <a href="#" class="contact-link">Contact info</a>
+        <p>{{this.userData.phone_number}}</p>
+      </div>
+      <div class="profile-role">
+        <p>{{this.userRoleData.company}}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- About Me Section -->
+  <div class="modern-card about-section">
+    <div class="edit-icon" >
+      <!-- <mat-icon>edit</mat-icon> -->
+    </div>
+    <h3>About me</h3>
+    <p>{{this.userRoleData.about}}</p>
+  </div>
+  <div class="modern-card about-section">
+    <div class="edit-icon" >
+      <!-- <mat-icon>edit</mat-icon> -->
+    </div>
+    <h3>Interest</h3>
+    <p>{{this.userData.interest}}</p>
+  </div>
+  <div class="modern-card about-section">
+    <div class="edit-icon" >
+      <!-- <mat-icon>edit</mat-icon> -->
+    </div>
+    <h3>Hobbies</h3>
+    <p>{{this.userData.hobbies}}</p>
+  </div>
+
+  <!-- Skills Section -->
+  <!-- <div class="modern-card skills-section">
+    <div class="edit-icon" >
+      <mat-icon>edit</mat-icon>
+    </div>
+    <h3>Skills</h3>
+    <ul>
+      <li>Full-Stack Development</li>
+      <li>Web development</li>
+      <li>UI/UX Design</li>
+    </ul>
+  </div> -->
+
+  <!-- Education Section -->
+  <!-- <div class="modern-card education-section">
+    <div class="edit-icon">
+    </div>
+    <h3>Company</h3>
+    <p><strong>{{this.userRoleData.company}}</strong></p>
+    <p>{{this.userRoleData.degree}}</p>
+    <p>{{this.userData.created_at | date }} - 2029</p>
+  </div> -->
+
+  <!-- Experience Section -->
+  <!-- <div class="modern-card experience-section">
+    <div class="edit-icon">
+      <mat-icon>edit</mat-icon>
+    </div>
+    <h3>Experience -- NEED TO CHANGE</h3>
+    <p><strong>Management Information System Intern</strong></p>
+    <p>IDESS Maritime Centre (Subic) Inc.</p>
+    <p>Jul 2023 - Jul 2023</p>
+    <p>Subic Central Luzon, Philippines</p>
+  </div> -->
+
+  <!-- Experience Section -->
+  <!-- <div class="modern-card experience-section">
+    <div class="edit-icon">
+    </div>
+    <h3>Resume</h3>
+    <p *ngIf="!resumeUrl">No Resume Uploaded</p>
+    <p *ngIf="resumeUrl"><a [href]="resumeUrl" target="_blank">View Resume</a></p>
+
+    <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" #fileInput (change)="onFileSelected($event)" style="display:none;" />
+    <button mat-button (click)="fileInput.click()">Select File</button>
+    <button mat-button color="primary" (click)="uploadFile()" [disabled]="!selectedFile">Upload File</button>
+</div> -->
+
+<!-- <div class="modern-card experience-section">
+  <div class="card-header">
+    <h3>Resume</h3>
+    <mat-icon class="edit-icon">description</mat-icon>
+  </div>
+
+  <div class="resume-status">
+    <a *ngIf="resumeUrl"
+       [href]="resumeUrl"
+       target="_blank"
+       class="resume-link">
+      <mat-icon>description</mat-icon>
+      View Current Resume
+    </a>
+  </div>
+
+
+  <ng-template #downloadFile>
+    <a [href]="userRoleData.resume_url" download>
+      Click to download
+    </a>
+  </ng-template>
+
+  <div *ngIf="selectedFile" class="file-preview">
+    <p class="preview-title">Selected File:</p>
+    <span class="file-name">{{ selectedFile.name }}</span>
+    <div class="file-info">
+      <mat-icon>insert_drive_file</mat-icon>
+      <span class="file-size">({{ formatFileSize(selectedFile.size) }})</span>
+    </div>
+  </div> -->
+
+
+  <!-- Upload Controls -->
+  <!-- <div class="upload-controls">
+    <input
+      type="file"
+      #fileInput
+      accept=".pdf,.doc,.docx,.jpg,.png"
+      (change)="onFileSelected($event)"
+      style="display:none;"
+    />
+    <button
+      mat-stroked-button
+      (click)="fileInput.click()">
+      Select File
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="uploadFile()"
+      [disabled]="!selectedFile || isUploading">
+      {{ isUploading ? 'Uploading...' : 'Upload File' }}
+    </button>
+  </div> -->
+</div>
+
+
+
+    <!-- Activity Section -->
+    <div class="modern-card activity-section">
+      <h3>SkillLink Activity</h3>
+      <!-- <h5>14,113 followers</h5> -->
+      <div class="activity-tabs">
+        <button class="tab active">Posts</button>
+        <button class="tab">Comments</button>
+        <button class="tab">Images</button>
+      </div>
+      <div class="activity-posts">
+        <!-- Post 1 -->
+        <div class="post" *ngFor="let forum of displayedForums">
+          <p class="post-title">
+            {{ forum.title }}
+          </p>
+          @if (forum.image) {
+            <img class="forum-image" [src]="forum.image" alt="">
+          }@else{
+            <p class="post-text">
+            </p>
+          }
+          <p class="post-text">
+
+            {{ forum.desc }}
+          </p>
+          <div class="post-footer">
+            <div class="reaction-icons">
+              <button>arrow_upward</button>
+              <span>{{forum.likes_count}}</span>
+            </div>
+            <!-- Image with a fixed size -->
+            <span class="comments-count" >{{forum.comments_count}} comments</span>
+          </div>
+
+        </div>
+
+
+          <button class="tab" *ngIf="forums.length > 3 " (click)="toggleShowAll()">
+            {{ showAll ? 'Show fewer posts' : 'Show all posts' }}
+          </button>
+
+    </div>
+
+      <!-- <a href="/posts"><button class="show-all-btn">Show all posts</button></a> -->
+    </div>
+
+
+
+<div class="modal-overlay" *ngIf="isModalVisible">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Edit Profile</h2>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input
+            type="text"
+            id="fullname"
+            formControlName="name"
+            placeholder="Enter your full name"
+          />
+          <div *ngIf="editProfileForm.get('name')?.invalid && editProfileForm.get('name')?.touched" class="error">
+            Full Name is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input
+            type="text"
+            id="address"
+            formControlName="address"
+            placeholder="Enter your address"
+          />
+          <div *ngIf="editProfileForm.get('address')?.invalid && editProfileForm.get('address')?.touched" class="error">
+            Address is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone_number">Phone Number</label>
+          <input
+            type="text"
+            id="phone_number"
+            formControlName="phone_number"
+            placeholder="Enter your phone number"
+          />
+          <div *ngIf="editProfileForm.get('phone_number')?.invalid && editProfileForm.get('phone_number')?.touched" class="error">
+            Phone Number is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Enter your email"
+          />
+          <div *ngIf="editProfileForm.get('email')?.invalid && editProfileForm.get('email')?.touched" class="error">
+            Email is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="school">Company</label>
+          <input
+            type="text"
+            id="school"
+            formControlName="company"
+            placeholder="Enter your company"
+          />
+          <div *ngIf="editProfileForm.get('company')?.invalid && editProfileForm.get('company')?.touched" class="error">
+            company is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="about">About</label>
+          <textarea
+            id="about"
+            formControlName="about"
+            rows="5"
+            placeholder="Write about yourself"
+          ></textarea>
+          <div *ngIf="editProfileForm.get('about')?.invalid && editProfileForm.get('about')?.touched" class="error">
+            About section is required and must be at least 10 characters long.
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+          <button type="submit" [disabled]="editProfileForm.invalid" class="save-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

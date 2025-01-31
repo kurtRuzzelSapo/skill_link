@@ -17,14 +17,14 @@
   </div>
 </div>
 <div *ngIf="!isLoading">
-	<div *ngFor="let forum of forums" class="bg-white p-10 rounded-lg hover:shadow-md border-b border-gray-500" >
+	<div *ngFor="let forum of forums " class="bg-white p-10 rounded-lg hover:shadow-md border-b border-gray-500" >
 		<!-- User Info with Three-Dot Menu -->
 		<div class="flex items-center justify-between mb-4">
 			<div class="flex items-center space-x-2">
 
 				<img [src]="forum.user.profile_image" alt="User Avatar" class="w-8 h-8 rounded-full">
 				<div>
-					<p class="text-gray-800 font-semibold">{{ forum.user.fullname | titlecase }}</p>
+					<p class="text-gray-800 font-semibold hover:cursor-pointer" (click)="Visit(forum.user_id)">{{ forum.user.fullname | titlecase }}</p>
           <span [ngClass]="{
             'bg-custom-teal text-white px-1 rounded-md':  forum.user.role === 'intern',
             'bg-custom-purple text-purple-800 p-1 rounded-lg':  forum.user.role === 'recruiter'
@@ -47,6 +47,7 @@
 		</div>
 		<!-- Message -->
 		<div class="mb-4">
+      <span class="bg-custom-teal text-white p-1 text-xs rounded-full">{{forum.specialization | titlecase}}</span>
 			<p class="text-gray-800 text-xl font-bold">{{ forum.title | titlecase }}</p>
 			<p class="text-gray-800">{{ forum.desc | titlecase }}</p>
       <!-- <a href="" class="text-blue-600">#AdventureCat</a> -->

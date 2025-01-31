@@ -109,4 +109,8 @@ export class RecruiterComponent implements OnInit, OnDestroy {
   commentPost(postId: number, forum: any): void {
     this.router.navigate(['/social/comment'], { state: { forum, postId } });
   }
+
+  Visit(userId: number) {
+    this.router.navigate([`/visit`], { state: { userId } });
+  }
 }

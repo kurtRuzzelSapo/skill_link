@@ -1,59 +1,87 @@
 # SkillLink
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+![SkillLink Logo](public/skill-link-name.png)
 
-## Development server
+SkillLink is an online community and knowledge-sharing hub where interns and recruiters can 
+discuss industry trends, exchange career advice, and connect. This platform enhances the 
+social experience for both roles by offering a dedicated space for meaningful interactions and 
+professional networking.
 
-To start a local development server, run:
+## 📌 Screenshots
 
+### 🔐 Login Page
+![Login Page](public/LOGIN.png)
+
+### 📝 Sign-up Page
+![Sign-up Page](public/LOGIN.png)
+
+### 🌐 Main Dashboard
+![Main Page](public/MAIN_PAGE.png)
+
+## 🚀 Getting Started
+
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version **19.0.7**.
+
+### 🔧 Prerequisites
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (Latest LTS recommended)
+- [Angular CLI](https://angular.dev/tools/cli) 
+
+### 📥 Installation
+Clone the repository and install dependencies:
+```bash
+git clone https://github.com/your-username/skilllink.git
+cd skilllink
+npm install
+```
+
+## 🎯 Development
+
+### 🖥️ Start the Development Server
+Run the following command to launch a local development server:
 ```bash
 ng serve
 ```
+Then, open your browser and navigate to [`http://localhost:4200/`](http://localhost:4200/). The app will automatically reload when you modify any source files.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### 📦 Code Scaffolding
+Use the Angular CLI to generate new components, directives, or services:
 ```bash
 ng generate component component-name
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+To see all available schematics, run:
 ```bash
 ng generate --help
 ```
 
-## Building
+## 📦 Building the Project
 
-To build the project run:
-
+To create a production-ready build, run:
 ```bash
-ng build
+ng build --configuration production
 ```
+This compiles the project and places the optimized files in the `dist/` directory.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🧪 Running Tests
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+### ✅ Unit Tests
+To run unit tests with [Karma](https://karma-runner.github.io):
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### 🔍 End-to-End Tests
+For e2e testing, use:
 ```bash
 ng e2e
 ```
+> Note: Angular CLI does not include an e2e framework by default. Choose a suitable framework like Cypress or Playwright.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📚 Additional Resources
+- [Angular CLI Documentation](https://angular.dev/tools/cli)
+- [Angular Official Guide](https://angular.dev/)
+- [RxJS](https://rxjs.dev/)
 
-## Additional Resources
+---
+👨‍💻 Developed with ❤️ by **Your Name**
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

@@ -31,6 +31,7 @@ import { Toast } from 'primeng/toast';
   styleUrl: './recruiter-register.component.css'
 })
 export class RecruiterRegisterComponent {
+  specializations: string[] = [];
   errorMessage: string | null = null;
   backendErrors: { [key: string]: string[] } | null = null;
   activeStep: number = 1;
@@ -48,6 +49,9 @@ export class RecruiterRegisterComponent {
       company: ['', Validators.required],
       position: ['', Validators.required],
       industry: ['', Validators.required],
+      hobbies: ['', Validators.required],
+      interest: ['', Validators.required],
+      specialization:[''],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password_confirmation: ['', Validators.required]
      } , {
@@ -59,13 +63,52 @@ export class RecruiterRegisterComponent {
     // Any additional initialization logic can go here
   }
 
+
+  addSkill(): void {
+    const newSpel = this.signupForm.get('specialization')?.value?.trim();
+    if (newSpel && !this.specializations.includes(newSpel)) {
+      this.specializations.push(newSpel);
+      this.signupForm.get('specialization')?.reset(); // Clear input after adding
+    } else if (this.specializations.includes(newSpel)) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Duplicate Skill',
+        detail: 'This skill already exists.',
+        life: 2000
+      });
+    }
+  }
+
+
+
+  onKeyUp(event: KeyboardEvent): void {
+    const input = (event.target as HTMLInputElement).value.trim();
+    if (event.key === 'Enter' && input) { // Add specialization on Enter key
+      if (!this.specializations.includes(input)) {
+        this.specializations.push(input); // Add to the array
+      }
+      this.signupForm.get('specialization')?.setValue(''); // Clear input field
+    }
+  }
+
+  // Method to remove a specialization
+  removeSkill(skill: string): void {
+    this.specializations = this.specializations.filter(s => s !== skill); // Remove from array
+  }
+
   passwordMatchValidator(g: FormGroup) {
     return g.get('password')?.value === g.get('password_confirmation')?.value ? null : {'mismatch': true};
   }
 
   registerRecruiter(): void {
     if (this.signupForm.valid) {
-      this.authService.registerRecruiter(this.signupForm.value).subscribe({
+
+      const formData = {
+        ...this.signupForm.value,
+        specialization: this.specializations, // Ensure this is an array
+      };
+
+      this.authService.registerRecruiter(formData).subscribe({
         next: (response) => {
           console.log(response);
           this.authService.setLoginData(response.token, response.role, response.id);

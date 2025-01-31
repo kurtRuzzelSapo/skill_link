@@ -23,7 +23,7 @@
       <div class="flex items-center space-x-2">
         <img [src]="forum.user.profile_image" alt="User Avatar" class="w-8 h-8 rounded-full">
         <div>
-          <p class="text-gray-800 font-semibold">{{ forum.user.fullname | titlecase }}</p>
+          <p class="text-gray-800 font-semibold hover:cursor-pointer" (click)="Visit(forum.user_id)">{{ forum.user.fullname | titlecase }}</p>
           <span [ngClass]="{
             'bg-custom-teal text-white p-1 rounded-xl':  forum.user.role === 'intern',
             'bg-custom-purple text-purple-800 p-1 rounded-lg':  forum.user.role === 'recruiter'
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="mb-4">
-      <p class="text-gray-800 text-xl font-bold">{{ forum.title | titlecase }}</p>
+      <p class="text-gray-800 text-xl font-bold hover:cursor-pointer" (click)="Visit(forum.user_id)">{{ forum.title | titlecase }}</p>
       <p class="text-gray-800">{{ forum.desc }}</p>
     </div>
     <div class="mb-4">

@@ -14,6 +14,7 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   forums: any[] = [];
+  Specializationforums: any[] = [];
   topForums: any[] = [];
   internForums:any[] = [];
   recruiterForums:any[] = [];
@@ -32,8 +33,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+
     this.fetchUserData();
-    this.getForums();
+    this.getPreference();
+    // this.getForums();
+    
   }
 
   responsiveOptions: any[] = [
@@ -75,8 +79,116 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  getForums() {
-    const subscription = this.socialService.getForums().subscribe({
+  // fetchUserDataFiltered(): void {
+  //   const userId = this.authService.getID();
+  //   if (userId) {
+  //     this.authService.getMyData(+userId).subscribe({
+  //       next: (response) => {
+  //         this.userRoleData = response.intern_profile? response.intern_profile : response.recruiter_profile;
+  //         this.userData = response.user;
+  //         // console.log('User data fetched successfully:', response);
+  //         // console.log("my data:", this.userData)
+  //         // this.userProfileImage = `${this.authService.apiUrl}${this.userData.profile_image}`;
+  //       },
+  //       error: (error) => {
+  //         console.error('Failed to fetch user data:', error);
+  //         if (error.status === 401) {
+  //           this.router.navigate(['/login']);
+  //         }
+  //       },
+  //     });
+  //   } else {
+  //     console.error('No user ID found in local storage.');
+  //     this.router.navigate(['/login']);
+  //   }
+  // }
+
+  // fetchUserDataFiltered() {
+
+  //   const user_id = this.authService.getID();
+  //   const subscription = this.authService.getMyFilterForums(user_id).subscribe({
+  //     next: (response) => {
+  //       this.isLoading = false;
+  //       const userId = this.authService.getID();
+  //       // this.Specializationforums = response.forums;
+  //       // Add separate arrays for intern and recruiter posts
+  //       // this.recentForums = response.posts.slice(0, 2);
+  //       // this.topForums = response.top_posts;
+  //       // this.internForums = response.intern_posts || [];  // Handling if not returned
+  //       // this.recruiterForums = response.recruiter_posts || [];
+  //       console.log('RAW DOG', response)
+  //       // // Process posts with like check
+  //       this.Specializationforums = response.forums.map((Specializationforums: any) => ({
+  //         ...Specializationforums,
+  //         isLiked: Specializationforums.likes.some((like: any) => like.user_id === userId),
+  //         galleryImages: Specializationforums.images.map((img: any) => ({
+  //         itemImageSrc: img.image_path
+  //         }))
+  //       }));
+
+
+
+  //       // ✅ Logging all the data for debugging
+  //       // console.log("Top posts:", this.topForums);
+
+  //       // console.log('Forums retrieved:', this.forums);
+  //       console.log('Forums Filtered:', this.Specializationforums);
+
+  //       // console.log('Intern posts:', this.internForums);
+  //       // console.log('Recruiter posts:', this.recruiterForums);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error retrieving forums:', error);
+  //       if (error.status === 401) {
+  //         this.router.navigate(['/login']);
+  //       }
+  //     },
+  //   });
+  //   this.subscriptions.push(subscription);
+
+  // }
+
+  // getForums() {
+  //   const subscription = this.socialService.getForums().subscribe({
+  //     next: (response) => {
+  //       this.isLoading = false;
+  //       const userId = this.authService.getID();
+
+  //       // Add separate arrays for intern and recruiter posts
+  //       this.recentForums = response.posts.slice(0, 2);
+  //       this.topForums = response.top_posts;
+  //       this.internForums = response.intern_posts || [];  // Handling if not returned
+  //       this.recruiterForums = response.recruiter_posts || [];
+
+  //       // Process posts with like check
+  //       this.forums = response.posts.map((forum: any) => ({
+  //         ...forum,
+  //         isLiked: forum.likes.some((like: any) => like.user_id === userId),
+  //         galleryImages: forum.images.map((img: any) => ({
+  //           itemImageSrc: img.image_path
+  //         }))
+  //       }));
+
+  //       // ✅ Logging all the data for debugging
+  //       // console.log("Top posts:", this.topForums);
+  //       console.log('Forums retrieved ALL:', this.forums);
+  //       console.log('RAW', response)
+  //       // console.log('Intern posts:', this.internForums);
+  //       // console.log('Recruiter posts:', this.recruiterForums);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error retrieving forums:', error);
+  //       if (error.status === 401) {
+  //         this.router.navigate(['/login']);
+  //       }
+  //     },
+  //   });
+  //   this.subscriptions.push(subscription);
+  // }
+
+  getPreference() {
+    const user_id = this.authService.getID();
+    const subscription = this.authService.getMyFilterForums(user_id).subscribe({
       next: (response) => {
         this.isLoading = false;
         const userId = this.authService.getID();
@@ -98,7 +210,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         // ✅ Logging all the data for debugging
         // console.log("Top posts:", this.topForums);
-        // console.log('Forums retrieved:', this.forums);
+        console.log('Forums retrieved ALL:', this.forums);
+        console.log('RAW', response)
         // console.log('Intern posts:', this.internForums);
         // console.log('Recruiter posts:', this.recruiterForums);
       },
@@ -175,5 +288,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   commentPost(postId: number, forum: any): void {
     this.router.navigate(['/social/comment'], { state: { forum, postId } });
+  }
+
+  Visit(userId: number) {
+    this.router.navigate([`/visit`], { state: { userId } });
   }
 }

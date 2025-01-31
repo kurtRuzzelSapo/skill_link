@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { InternComponent } from './intern/intern.component';
 import { RecruiterComponent } from './recruiter/recruiter.component';
 import { CommentComponent } from './comment/comment.component';
+import { ProfileComponent } from '../../shared/profile/profile.component';
 
 
 export const socialRoutes: Routes = [
@@ -11,6 +12,7 @@ export const socialRoutes: Routes = [
   { path: 'intern', component: InternComponent },
   { path: 'recruiter', component:RecruiterComponent},
   { path: 'comment', component:CommentComponent},
+
 
   { path: '**', redirectTo: 'home' },
 ];
