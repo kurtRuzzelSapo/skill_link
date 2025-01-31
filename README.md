@@ -13,7 +13,7 @@ professional networking.
 ![Login Page](public/LOGIN.png)
 
 ### 📝 Sign-up Page
-![Sign-up Page](public/LOGIN.png)
+![Sign-up Page](public/SIGNUP.png)
 
 ### 🌐 Main Dashboard
 ![Main Page](public/MAIN_PAGE.png)
