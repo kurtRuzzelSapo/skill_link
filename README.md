@@ -83,5 +83,5 @@ ng e2e
 - [RxJS](https://rxjs.dev/)
 
 ---
-👨‍💻 Developed with ❤️ by **Your Name**
+👨‍💻 Developed with ❤️ by **Kurt Ruzzel Sapo**
 
